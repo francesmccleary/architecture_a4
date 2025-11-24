@@ -75,10 +75,66 @@ ISR(TIMER3_COMPA_vect) {
  */
 
 void led_state(uint8_t LED, uint8_t state) {
+	//here is where we change the led state 
+	// LED is the number of the LED 
+	// state is the state of the LCD (binary)
 
+	// we are only working with Port L bit 1, 3, 5, and 7 
+	// first we need to set up Port L and its DDR 
+	DDRL = 0xff; 
+
+	//this is where our switch statement will go 
+	//if LED is on, turn off 
+	switch(LED) {
+		// LED is set to bit 7 
+		case 0: 
+			// if state is 1, turn off 
+			if state == 1: 
+				// change state to zero 
+				state = 0;
+				// assign val to Port L 
+				PORTL &= 0b01111111; 
+			else: 
+				state == 1; 
+				// load val to set bit 
+				PORTL |= 0b10000000; 
+			break; 
+		// LED is set to bit 5 
+		case 1: 
+			// if state is 1, turn off 
+			if state == 1: 
+				state = 0;
+				PORTL &= 0b11011111;
+			else: 
+				// if state is 0, turn on 
+				state == 1; 
+				PORTL |= 0b00100000; 
+			break; 
+		// LED is set to bit 3
+		case 2: 
+			// if state is 1, turn off 
+			if state == 1: 
+				state = 0;
+				PORTL &= 0b11110111;
+			else: 
+				// if state is 0, turn on
+				state == 1; 
+				PORTL |= 0b00001000; 
+			break; 
+		// LED is set to bit 1
+		case 3: 
+			// if state is 1, turn off 
+			if state == 1: 
+				state = 0;
+				PORTL &= 0b11111101;
+			else: 
+				state == 1; 
+				PORTL |= 0b00000010; 
+			break; 
+		}
+	// Will never reach this part but keeps compiler happy 
+	return 0; 
 }
-
-
 
 void SOS() {
     uint8_t light[] = {
@@ -98,7 +154,12 @@ void SOS() {
 	int length = 19;
 }
 
+void make_SOS(){
+	// use calls to led_state() and _delay_ms() 
+	// also use for loop to use arrays defined in SOS()
+	
 
+}
 void glow(uint8_t LED, float brightness) {
 
 }
@@ -165,7 +226,7 @@ int main() {
  * *********************************************
  */
 
-/* This code could be used to test your work for part A.
+/* This code could be used to test your work for part A.*/ 
 
 	led_state(0, 1);
 	_delay_ms(1000);
@@ -179,7 +240,7 @@ int main() {
 	_delay_ms(1000);
 	led_state(1, 0);
 	_delay_ms(1000);
- */
+
 
 /* This code could be used to test your work for part B.
 
